@@ -6,35 +6,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;;
-import com.example.casacerouno.APIServices.API;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.casacerouno.APIServices.Adaptador;
-import com.example.casacerouno.APIServices.Manejador;
 import com.example.casacerouno.Enlace.Comunicador;
 import com.example.casacerouno.Modelos.Casa;
-import com.example.casacerouno.Modelos.Cuarto;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.R;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
-    TextView textView;
     List<Habitacion> habitacionList;
     Casa casa;
-    Adaptador adaptador = new Adaptador();
+    String casaVuelta;
     Comunicador comunicador = new Comunicador();
-    private Manejador manejador = API.getApi().create(Manejador.class);
 
 
     private RecyclerView mRecyclerView;
@@ -42,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private GridLayoutManager gridLayoutManager;
-
-
-    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +45,18 @@ public class MainActivity extends AppCompatActivity {
         //se recupera el String que contiene la casa
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-           String casaVuelta = bundle.getString("casa");
-            casa = comunicador.deserialize(casaVuelta);
+           casaVuelta = bundle.getString("casa");
+           casa = comunicador.deserialize(casaVuelta);
         }
 
         preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
-        habitacionList = this.getAllHabitaciones();
-
-
+        habitacionList = casa.getHabitaciones();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         //mLayoutManager = new LinearLayoutManager(this);
+
+        //contexto = this, y numero de columnas = 2
         gridLayoutManager = new GridLayoutManager(this, 2);
 
         // 1 linea de dif. acabo de build y error en interfaz xk pojo. esto y luego xml con card, textview image
@@ -75,7 +66,12 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new Adaptador(habitacionList, R.layout.recycler_view_item, new Adaptador.OnItemClickListener() {
             @Override
             public void onItemClick(Habitacion habitacion, int position) {
-                Toast.makeText(MainActivity.this, position+"- Habitacion: " +habitacion.getNombre(), Toast.LENGTH_LONG).show();
+                final String casaString = casaVuelta;
+                Toast.makeText(MainActivity.this, "Habitación: "+habitacion.getNombre(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ActivityDispositivos.class);
+                intent.putExtra("casa", casaString);
+                intent.putExtra("numeroHabitacion", position);
+                startActivity(intent);
             }
         });
 
@@ -88,15 +84,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-    }
-
-    private List<Habitacion> getAllHabitaciones() {
-        return new ArrayList<Habitacion>() {{
-            for (int i = 0; i < casa.getHabitaciones().size(); i++) {
-                String nombreCuarto = casa.getHabitaciones().get(i).getNombre();
-                add(new Cuarto(nombreCuarto, adaptador.poster(nombreCuarto)));
-            }
-        }};
     }
 
     @Override
@@ -132,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
     private void removeSharedPreferences() {
         preferences.edit().clear().apply();
     }
-
-
-
-
 }
 
 

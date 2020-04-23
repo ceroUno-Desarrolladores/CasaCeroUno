@@ -1,6 +1,7 @@
 package com.example.casacerouno.APIServices;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.casacerouno.Modelos.Cuarto;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class Adaptador extends RecyclerView.Adapter <Adaptador.ViewHolder>{
+public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
 
     private List<Habitacion> habitacionList;
     private int layout;
@@ -28,9 +28,6 @@ public class Adaptador extends RecyclerView.Adapter <Adaptador.ViewHolder>{
         this.habitacionList = habitacionList;
         this.layout = layout;
         this.itemClickListener = listener;
-    }
-
-    public Adaptador() {
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -69,9 +66,10 @@ public class Adaptador extends RecyclerView.Adapter <Adaptador.ViewHolder>{
 
         public void bind(final Habitacion habitacion, final OnItemClickListener listener) {
             // Procesamos los datos a renderizar
-            textViewName.setText(habitacion.getNombre());
-            Picasso.with(context).load(poster(habitacion.getNombre())).fit().into(imageViewPoster);
-            // imageViewPoster.setImageResource(movie.getPoster());
+            String nombre = habitacion.getNombre();
+            textViewName.setText(nombre);
+            Picasso.with(context).load(poster(nombre)).fit().into(imageViewPoster);
+
             // Definimos que por cada elemento de nuestro recycler view, tenemos un click listener
             // que se comporta de la siguiente manera...
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -83,26 +81,25 @@ public class Adaptador extends RecyclerView.Adapter <Adaptador.ViewHolder>{
         }
     }
 
-    public int poster(String nombreHabitacion){
-        int imagen;
-        switch (nombreHabitacion){
+    public int poster(String nombreHabitacion) {
+        switch (nombreHabitacion) {
             case "living":
-                imagen =  R.drawable.living;
+                return R.drawable.living;
             case "comedor":
-                imagen =  R.drawable.comedor;
+                return R.drawable.comedor;
             case "cocina":
-                imagen =  R.drawable.cocina;
+                return R.drawable.cocina;
             case "dormitorio":
-                imagen = R.drawable.dormitorio;
+                return R.drawable.dormitorio;
             case "patio":
-                imagen = R.drawable.patio;
+                return R.drawable.patio;
             case "bano":
-                imagen = R.drawable.bano;
+                return R.drawable.bano;
             case "entrada":
-                imagen = R.drawable.entrada;
+                return R.drawable.entrada;
             default:
-                imagen = R.drawable.sin_icono;
-        } return imagen;
+                return R.drawable.sin_icono;
+        }
     }
 
     // Declaramos nuestra interfaz con el/los método/s a implementar
