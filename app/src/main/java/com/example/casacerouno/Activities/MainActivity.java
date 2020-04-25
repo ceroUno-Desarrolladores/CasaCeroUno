@@ -19,7 +19,6 @@ import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.R;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Implementamos nuestro OnItemClickListener propio, sobreescribiendo el método que nosotros
         // definimos en el adaptador, y recibiendo los parámetros que necesitamos
-        mAdapter = new Adaptador(habitacionList, R.layout.recycler_view_item, new Adaptador.OnItemClickListener() {
+        mAdapter = new Adaptador(habitacionList, R.layout.habitaciones_item, new Adaptador.OnItemClickListener() {
             @Override
             public void onItemClick(Habitacion habitacion, int position) {
                 final String casaString = casaVuelta;

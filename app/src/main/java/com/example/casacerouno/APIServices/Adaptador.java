@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.casacerouno.Modelos.Dispositivos;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.R;
 import com.squareup.picasso.Picasso;
@@ -29,6 +30,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         this.layout = layout;
         this.itemClickListener = listener;
     }
+
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflamos el layout y se lo pasamos al constructor del ViewHolder, donde manejaremos
@@ -53,10 +55,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Elementos UI a rellenar
-        public TextView textViewName;
-        public ImageView imageViewPoster;
+        private TextView textViewName;
+        private ImageView imageViewPoster;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             // Recibe la View completa. La pasa al constructor padre y enlazamos referencias UI
             // con nuestras propiedades ViewHolder declaradas justo arriba.
             super(itemView);
@@ -64,7 +66,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
             imageViewPoster = (ImageView) itemView.findViewById(R.id.imageViewPoster);
         }
 
-        public void bind(final Habitacion habitacion, final OnItemClickListener listener) {
+        private void bind(final Habitacion habitacion, final OnItemClickListener listener) {
             // Procesamos los datos a renderizar
             String nombre = habitacion.getNombre();
             textViewName.setText(nombre);
@@ -81,7 +83,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         }
     }
 
-    public int poster(String nombreHabitacion) {
+    private int poster(String nombreHabitacion) {
         switch (nombreHabitacion) {
             case "living":
                 return R.drawable.living;

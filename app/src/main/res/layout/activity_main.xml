@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:text="Donde comenzamos?"
             android:textAlignment="center"
-            android:textSize="30dp"
-            android:fontFamily="@font/roboto_light"
+            android:textSize="35dp"
+            android:fontFamily="@font/roboto_thin"
             android:padding="5dp"></TextView>
 
         <androidx.recyclerview.widget.RecyclerView
