@@ -20,7 +20,9 @@ public class AdaptadorDispositivos  extends RecyclerView.Adapter<AdaptadorDispos
 
     private List<Dispositivos> dispositivosList;
     private int layout;
+    private Dispositivos dispositivo;
     private OnItemClickListener itemClickListener;
+
 
     private Context context;
 
@@ -61,8 +63,9 @@ public class AdaptadorDispositivos  extends RecyclerView.Adapter<AdaptadorDispos
 
         public void bind(final Dispositivos dispositivo, final OnItemClickListener listener){
             String tipoDispositivo = dispositivo.getTipo();
+            String statusDispositivo = dispositivo.getStatus();
             textViewName.setText(dispositivo.getNombre());
-            Picasso.with(context).load(poster(tipoDispositivo)).fit().into(imageViewPoster);
+            Picasso.with(context).load(poster(tipoDispositivo, statusDispositivo)).fit().into(imageViewPoster);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,10 +75,13 @@ public class AdaptadorDispositivos  extends RecyclerView.Adapter<AdaptadorDispos
         }
 
     }
-    private int poster(String tipoDispositivo) {
+    private int poster(String tipoDispositivo, String status) {
         switch (tipoDispositivo) {
             case "GP":
-                return R.drawable.foco_apagado;
+                if(status.equals("off"))
+                    return R.drawable.foco_apagado;
+                else
+                    return R.drawable.foco;
             case "TV":
                 return R.drawable.televisor;
             case "TM":
@@ -89,4 +95,5 @@ public class AdaptadorDispositivos  extends RecyclerView.Adapter<AdaptadorDispos
     public interface OnItemClickListener{
         void onItemClick(Dispositivos dispositivos, int posicion);
     }
+
 }
