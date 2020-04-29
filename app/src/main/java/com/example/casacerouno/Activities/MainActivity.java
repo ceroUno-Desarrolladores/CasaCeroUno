@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.casacerouno.APIServices.API;
 import com.example.casacerouno.APIServices.Adaptador;
+import com.example.casacerouno.APIServices.Manejador;
 import com.example.casacerouno.Enlace.Comunicador;
 import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Habitacion;
@@ -21,12 +25,19 @@ import com.example.casacerouno.R;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     List<Habitacion> habitacionList;
     Casa casa;
     String casaVuelta;
+    Manejador manejador;
+    String devolucion;
+
     Comunicador comunicador = new Comunicador();
 
 
@@ -47,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
            casaVuelta = bundle.getString("casa");
            casa = comunicador.deserialize(casaVuelta);
         }
+
+
+
 
         preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 

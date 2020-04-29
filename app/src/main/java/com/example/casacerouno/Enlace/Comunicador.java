@@ -4,8 +4,11 @@ import android.util.Base64;
 import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
@@ -34,7 +37,8 @@ public class Comunicador {
     //metodo para decodificar en BASE64
     public String decodificar64(String data) {
         byte[] byte64 = Base64.decode(data, Base64.DEFAULT);
-        return new String(byte64);
+        String vuelta = new String(byte64);
+        return vuelta.trim();
     }
 
     //metodo para deserealizar el string con la info de la casa

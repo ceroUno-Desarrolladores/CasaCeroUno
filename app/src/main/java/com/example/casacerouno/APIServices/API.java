@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class API {
 
@@ -19,6 +20,8 @@ public class API {
             builder.registerTypeAdapter(Casa.class, new Deserealizar());
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    //este Converter evita los errores por malformacion de JSON en el response
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(builder.create()))
                     .build();
         }

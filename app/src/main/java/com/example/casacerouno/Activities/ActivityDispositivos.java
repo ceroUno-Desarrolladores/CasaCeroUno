@@ -5,9 +5,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +15,9 @@ import com.example.casacerouno.Enlace.Comunicador;
 import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Dispositivos;
 import com.example.casacerouno.Modelos.Habitacion;
+import com.example.casacerouno.Aparatos.Persiana;
+import com.example.casacerouno.Aparatos.Televisor;
+import com.example.casacerouno.Aparatos.Termostato;
 import com.example.casacerouno.R;
 
 import java.util.List;
@@ -25,20 +27,14 @@ public class ActivityDispositivos extends AppCompatActivity {
     Casa casa;
     Habitacion habitacion;
     Comunicador comunicador = new Comunicador();
-    Dispositivos dispositivos;
     int posicion;
     String casaString;
     TextView textView;
-
-    private ListView listView;
-    private GridView gridView;
 
     List<Dispositivos> dispositivosList;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    AdaptadorDispositivos adaptadorDispositivos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +60,7 @@ public class ActivityDispositivos extends AppCompatActivity {
 //ACA SE REALIZA LA ACCION CON EL ITEM CLICKEADO!!!
             public void onItemClick(Dispositivos dispositivos, int posicion) {
                 Toast.makeText(ActivityDispositivos.this,posicion+" - : "+dispositivos.getNombre(),Toast.LENGTH_SHORT ).show();
-
+                cambioPantalla(dispositivos);
             }
         });
 
@@ -74,6 +70,24 @@ public class ActivityDispositivos extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         textView = findViewById(R.id.textViewDispositivo);
         textView.setText(habitacion.getNombre());
+    }
 
+    private void cambioPantalla(Dispositivos dispositivos){
+        String tipo = dispositivos.getTipo();
+        switch (tipo){
+            case "TV":
+                Intent intent = new Intent(ActivityDispositivos.this, Televisor.class);
+                intent.putExtra("nombre", dispositivos.getNombre() );
+                startActivity(intent);
+                break;
+            case "TM":
+                Intent intent2 = new Intent(ActivityDispositivos.this, Termostato.class);
+                startActivity(intent2);
+                break;
+            case "PR":
+                Intent intent3 = new Intent(ActivityDispositivos.this, Persiana.class);
+                startActivity(intent3);
+                break;
+        }
     }
 }

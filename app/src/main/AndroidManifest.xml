@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ActivityDispositivos"></activity>
+        <activity android:name=".Aparatos.Persiana"></activity>
+        <activity android:name=".Aparatos.Termostato" />
+        <activity android:name=".Aparatos.Televisor" />
+        <activity android:name=".Activities.ActivityDispositivos" />
         <activity android:name=".Activities.loginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

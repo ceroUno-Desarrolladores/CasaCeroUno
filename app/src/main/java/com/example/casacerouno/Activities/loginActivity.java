@@ -21,6 +21,9 @@ import com.example.casacerouno.Enlace.Comunicador;
 import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.R;
 import com.example.casacerouno.Utils.Util;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import java.io.Serializable;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +40,9 @@ public class loginActivity extends AppCompatActivity{
     private Switch switchRemember;
     private Button buttonLogin;
     private SharedPreferences preferences;
-    private String vuelta;
+    private String vuelta, devolucion, vuelta2;
     private Boolean logueo = false;
+
 
 
 
@@ -75,11 +79,11 @@ public class loginActivity extends AppCompatActivity{
                             String casaData = comunicador.setCasaInfo(API.APIKEY, "info", "3");
                             String casaData64 = comunicador.codificar64(casaData);
 
-                            Call<String> casa64 = manejador.casaBase64(casaData64);
+                            Call<String> casa64 = manejador.casa64(casaData64);
                             casa64.enqueue(new Callback<String>() {
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
-                                    final String devolucion = comunicador.decodificar64(response.body());
+                                    devolucion = comunicador.decodificar64(response.body());
                                     goToMain(devolucion);
                                 }
 

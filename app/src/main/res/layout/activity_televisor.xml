@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Aparatos.Televisor"
+    android:id="@+id/contenedor">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".televisor"
+            tools:showIn="@layout/activity_televisor">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="57dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/input_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/input"
+                        android:tag="input_tv"
+                        app:srcCompat="@drawable/input_tv" />
+
+                    <Space
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/onOff_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/encendido"
+                        android:tag="onOffTv"
+                        app:srcCompat="@drawable/onoff_tv" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="14dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textViewInput"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/input"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="51dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textViewOn"
+                        android:layout_width="26dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/encendido"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp">
+
+                            <Button
+                                android:id="@+id/canal1"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:onClick="onClick"
+                                android:tag="canal1"
+                                android:text="@string/canal_1"
+                                android:textAlignment="center"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/canal2"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal2"
+                                android:text="@string/canal_2"
+                                android:textAlignment="center"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/canal3"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal3"
+                                android:text="@string/canal_3"
+                                android:textAlignment="center"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp">
+
+                            <Button
+                                android:id="@+id/canal4"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal4"
+                                android:text="@string/canal_4"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/canal5"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal5"
+                                android:text="@string/canal_5"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/canal6"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal6"
+                                android:text="@string/canal_6"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp">
+
+                            <Button
+                                android:id="@+id/canal7"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal7"
+                                android:text="@string/canal_7"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/canal8"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal8"
+                                android:text="@string/canal_8"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/canal9"
+                                style="@style/Widget.AppCompat.Button"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal9"
+                                android:text="@string/canal_9"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/mute"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/mute"
+                                android:scaleType="fitCenter"
+                                android:tag="mute"
+                                app:srcCompat="@drawable/volumen_off" />
+
+                            <Button
+                                android:id="@+id/canal0"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="canal0"
+                                android:text="@string/canal_0"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/can_ant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/canal_ant"
+                                android:scaleType="fitCenter"
+                                android:tag="can_ant"
+                                app:srcCompat="@drawable/replay_tv" />
+
+                        </TableRow>
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="vertical">
+
+                        <TableRow>
+
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <Space
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/textViewMute"
+                        android:layout_width="131dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/mute"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textViewAnterior"
+                        android:layout_width="137dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/canal_ant"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="155dp">
+
+                    <Space
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/volumeUp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_up"
+                                android:scaleType="fitStart"
+                                android:tag="volumeUp"
+                                app:srcCompat="@drawable/arrow_u" />
+
+                            <ImageButton
+                                android:id="@+id/volumeDw"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_dw"
+                                android:scaleType="fitEnd"
+                                android:tag="volumeDw"
+                                app:srcCompat="@drawable/arrow_d" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <ImageButton
+                                android:id="@+id/flechaLeft"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_rg"
+                                android:scaleType="fitCenter"
+                                android:tag="flechaLeft"
+                                app:srcCompat="@drawable/arrow_l" />
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/flechaUp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_up"
+                                android:scaleType="fitCenter"
+                                android:tag="flechaUp"
+                                app:srcCompat="@drawable/arrow_u" />
+
+                            <Button
+                                android:id="@+id/botonOk"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_thin"
+                                android:tag="botonOk"
+                                android:text="@string/ok"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <ImageButton
+                                android:id="@+id/flechaDw"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_dw"
+                                android:scaleType="fitCenter"
+                                android:tag="flechaDw"
+                                app:srcCompat="@drawable/arrow_d" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <ImageButton
+                                android:id="@+id/flechaRight"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_lf"
+                                android:scaleType="fitCenter"
+                                android:tag="flechaRight"
+                                app:srcCompat="@drawable/arrow_r" />
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/canalUp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_up"
+                                android:scaleType="fitStart"
+                                android:tag="canalUp"
+                                app:srcCompat="@drawable/arrow_u" />
+
+                            <ImageButton
+                                android:id="@+id/canalDw"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:contentDescription="@string/flecha_dw"
+                                android:saveEnabled="false"
+                                android:scaleType="fitEnd"
+                                android:tag="canalDw"
+                                app:srcCompat="@drawable/arrow_d" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewVolumen"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/volumen"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="172dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/textViewCanal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/canal"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
