@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,35 +13,32 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.casacerouno.APIServices.API;
 import com.example.casacerouno.APIServices.Manejador;
 import com.example.casacerouno.Enlace.Comunicador;
-import com.example.casacerouno.Modelos.Casa;
+import com.example.casacerouno.Enlace.conex.Conexion;
 import com.example.casacerouno.R;
 import com.example.casacerouno.Utils.Util;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
-import java.io.Serializable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class loginActivity extends AppCompatActivity{
+import static com.example.casacerouno.Activities.MainActivity.conexion;
+
+public class loginActivity extends AppCompatActivity {
 
     Comunicador comunicador = new Comunicador();
     private Manejador manejador = API.getApi().create(Manejador.class);
-    private Casa casa;
-
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Switch switchRemember;
     private Button buttonLogin;
     private SharedPreferences preferences;
-    private String vuelta, devolucion, vuelta2;
-    private Boolean logueo = false;
+    private String vuelta, devolucion;
 
-
+    //logueo de la raspi
 
 
     @Override
@@ -51,9 +46,16 @@ public class loginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(conexion == null)
+            new Conexion(this);
+
+
+
         bindUI();
         preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
         setCredentialsIfExist();
+
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -75,6 +77,9 @@ public class loginActivity extends AppCompatActivity{
                         vuelta = comunicador.decodificar64(respuesta);
                         if (vuelta.equals("es valido")) {
                             saveOnSharedPreferences(email, password);
+
+                            conexion.setUser("marcos");
+                            conexion.setHash("2206");
 
                             String casaData = comunicador.setCasaInfo(API.APIKEY, "info", "3");
                             String casaData64 = comunicador.codificar64(casaData);
@@ -122,7 +127,7 @@ public class loginActivity extends AppCompatActivity{
         }
     }
 
-    private boolean logIn(String email, String password) {
+/*    private boolean logIn(String email, String password) {
         if (!isValidEmail(email)) {
             Toast.makeText(this, "email incorrecto, pruebe de vuelta", Toast.LENGTH_LONG).show();
             return false;
@@ -133,15 +138,15 @@ public class loginActivity extends AppCompatActivity{
         } else {
             return true;
         }
-    }
+    }*/
 
-    private boolean isValidEmail(String email) {
+/*    private boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isValidPassword(String password) {
         return password.length() >= 4;
-    }
+    }*/
 
 
     private void saveOnSharedPreferences(String email, String password) {
@@ -160,7 +165,6 @@ public class loginActivity extends AppCompatActivity{
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
 }
 
 

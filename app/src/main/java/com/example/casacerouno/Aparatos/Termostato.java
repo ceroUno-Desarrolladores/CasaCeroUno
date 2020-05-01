@@ -1,19 +1,21 @@
 package com.example.casacerouno.Aparatos;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.casacerouno.Enlace.conex.Conexion;
 import com.example.casacerouno.R;
 
 public class Termostato extends AppCompatActivity {
 
     private static int temperatura;
+    public static Conexion conexion;
 
     public static int getTemperatura() {
         Log.i("getTEMPERATURA -->", String.valueOf(temperatura));
@@ -21,7 +23,7 @@ public class Termostato extends AppCompatActivity {
     }
 
     public void setTemperatura(int temperatura) {
-        this.temperatura = temperatura;
+        Termostato.temperatura = temperatura;
     }
 
     private TextView mostrarPorcentaje;
@@ -72,9 +74,9 @@ public class Termostato extends AppCompatActivity {
                         mostrarPorcentaje.setText(seekBar.getProgress()+15 + "ºC");
                         setTemperatura(seekBar.getProgress());
 
+                        conexion.send(String.valueOf(mostrarPorcentaje.getTag()),"A", String.valueOf(mostrarPorcentaje));
 
-                        /*conex.send(String.valueOf(mostrarPorcentaje.getTag()), "A", String.valueOf(mostrarPorcentaje));
-                        Log.i("TEMPERATURA ---------->", String.valueOf(seekBar.getProgress()));*/
+                        Log.i("TEMPERATURA ---------->", String.valueOf(seekBar.getProgress()));
                     }
                 });
 

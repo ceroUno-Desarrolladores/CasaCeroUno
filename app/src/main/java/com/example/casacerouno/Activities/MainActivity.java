@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,19 +14,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.casacerouno.APIServices.API;
 import com.example.casacerouno.APIServices.Adaptador;
-import com.example.casacerouno.APIServices.Manejador;
 import com.example.casacerouno.Enlace.Comunicador;
+import com.example.casacerouno.Enlace.conex.Conexion;
 import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.R;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,16 +30,15 @@ public class MainActivity extends AppCompatActivity {
     List<Habitacion> habitacionList;
     Casa casa;
     String casaVuelta;
-    Manejador manejador;
-    String devolucion;
-
     Comunicador comunicador = new Comunicador();
+    public static Conexion conexion;
+
+    Timer timer = new Timer();
 
 
     private RecyclerView mRecyclerView;
     // Puede ser declarado como 'RecyclerView.Adapter' o como nuetra clase adaptador 'MyAdapter'
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private GridLayoutManager gridLayoutManager;
 
     @Override
@@ -59,14 +53,11 @@ public class MainActivity extends AppCompatActivity {
            casa = comunicador.deserialize(casaVuelta);
         }
 
-
-
-
         preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
         habitacionList = casa.getHabitaciones();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         //mLayoutManager = new LinearLayoutManager(this);
 
         //contexto = this, y numero de columnas = 2
@@ -87,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         // Lo usamos en caso de que sepamos que el layout no va a cambiar de tamaño, mejorando la performance
         mRecyclerView.setHasFixedSize(true);
@@ -132,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
     private void removeSharedPreferences() {
         preferences.edit().clear().apply();
     }
+
 }
 
 

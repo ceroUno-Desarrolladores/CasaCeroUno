@@ -1,7 +1,6 @@
 package com.example.casacerouno.APIServices;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.casacerouno.Modelos.Dispositivos;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.R;
 import com.squareup.picasso.Picasso;
@@ -44,7 +42,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
 
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Llamamos al método Bind del ViewHolder pasándole objeto y listener
-        holder.bind(habitacionList.get(position), (OnItemClickListener) itemClickListener);
+        holder.bind(habitacionList.get(position), itemClickListener);
     }
 
 
@@ -62,8 +60,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
             // Recibe la View completa. La pasa al constructor padre y enlazamos referencias UI
             // con nuestras propiedades ViewHolder declaradas justo arriba.
             super(itemView);
-            textViewName = (TextView) itemView.findViewById(R.id.textViewTitle);
-            imageViewPoster = (ImageView) itemView.findViewById(R.id.imageViewPoster);
+            textViewName = itemView.findViewById(R.id.textViewTitle);
+            imageViewPoster = itemView.findViewById(R.id.imageViewPoster);
         }
 
         private void bind(final Habitacion habitacion, final OnItemClickListener listener) {

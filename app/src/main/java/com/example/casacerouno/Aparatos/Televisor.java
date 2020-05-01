@@ -1,7 +1,5 @@
 package com.example.casacerouno.Aparatos;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +8,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.casacerouno.R;
+
+import static com.example.casacerouno.Activities.MainActivity.conexion;
 
 public class Televisor extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,10 +43,14 @@ public class Televisor extends AppCompatActivity implements View.OnClickListener
     public ImageButton btn_flechaRight;
     public ImageButton btn_flechaLeft;
 
+    private String nombreTele;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_televisor);
+
+        nombreTele = getIntent().getStringExtra("nombre");
 
         btn_input = findViewById(R.id.input_tv);
         btn_input.setOnClickListener(this);
@@ -120,8 +126,9 @@ public class Televisor extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         Log.i("-----------------------", "BOTON: "+v.getTag());
-        //ambiente.recibeBotones(dev, "A", String.valueOf(v.getTag()));
-//        conex.send( dev,"A", String.valueOf(v.getTag()));
+
+        conexion.send(nombreTele, "A", String.valueOf(v.getTag()));
+
         Toast.makeText(getApplicationContext(),"Boton"+v.getTag(),Toast.LENGTH_SHORT).show();
 
 
