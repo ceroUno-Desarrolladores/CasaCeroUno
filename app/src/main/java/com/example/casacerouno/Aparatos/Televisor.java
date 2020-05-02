@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.casacerouno.R;
 
-import static com.example.casacerouno.Activities.MainActivity.conexion;
+import static com.example.casacerouno.Activities.loginActivity.conexion;
 
 public class Televisor extends AppCompatActivity implements View.OnClickListener {
 

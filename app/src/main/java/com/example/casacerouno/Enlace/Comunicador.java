@@ -3,16 +3,14 @@ package com.example.casacerouno.Enlace;
 import android.util.Base64;
 import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Habitacion;
+import com.example.casacerouno.Modelos.Proyecto;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Comunicador {
 
@@ -27,6 +25,9 @@ public class Comunicador {
         return "key=" + key + "&cmd=" + cmd + "&p1=" + p1;
     }
 
+    public String setListaProyectos(String key){
+        return "key="+key+"&cmd=lst";
+    }
     //metodo para codificar en BASE64
     public String codificar64(String data) {
         byte[] data64 = data.getBytes();
@@ -51,6 +52,14 @@ public class Comunicador {
         ArrayList<Habitacion> habitacionArrayList = gson.fromJson(json, casaType);
         Casa casa = new Casa(habitacionArrayList);
         return casa;
+    }
+    public List<Proyecto> deserealizeProyectos(String respose){
+        Gson gson = new Gson();
+        JsonElement json;
+        json = gson.fromJson(respose, JsonElement.class);
+        Type ProyectoType = new TypeToken<ArrayList<Proyecto>>() { }.getType();
+        List<Proyecto> losProyectos = gson.fromJson(json,ProyectoType);
+        return losProyectos;
     }
 }
 

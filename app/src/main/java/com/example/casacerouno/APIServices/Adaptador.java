@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casacerouno.Modelos.Habitacion;
+import com.example.casacerouno.Modelos.Proyecto;
 import com.example.casacerouno.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,15 +19,27 @@ import java.util.List;
 public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
 
     private List<Habitacion> habitacionList;
+    private List<Proyecto> proyectoList;
+    private String ProyectoOHabitacion;
     private int layout;
     private OnItemClickListener itemClickListener;
+    private OnItemClickListenerProyectos itemClickListenerPr;
 
     private Context context;
+
 
     public Adaptador(List<Habitacion> habitacionList, int layout, OnItemClickListener listener) {
         this.habitacionList = habitacionList;
         this.layout = layout;
         this.itemClickListener = listener;
+        this.ProyectoOHabitacion="H";
+    }
+
+    public Adaptador(List<Proyecto> Proyectos, int layout, OnItemClickListenerProyectos listener, boolean t) {
+        this.proyectoList = Proyectos;
+        this.layout = layout;
+        this.itemClickListenerPr = listener;
+        this.ProyectoOHabitacion="P";
     }
 
 
@@ -42,12 +55,20 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
 
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Llamamos al método Bind del ViewHolder pasándole objeto y listener
-        holder.bind(habitacionList.get(position), itemClickListener);
+        if (this.ProyectoOHabitacion == "P" ){
+            holder.binds(proyectoList.get(position),itemClickListenerPr);
+        }else{
+            holder.bind(habitacionList.get(position), itemClickListener);
+        }
     }
 
 
     public int getItemCount() {
-        return habitacionList.size();
+        if (ProyectoOHabitacion=="P") {
+            return proyectoList.size();
+        }else{
+            return habitacionList.size() ;
+        }
     }
 
 
@@ -78,6 +99,20 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
                     listener.onItemClick(habitacion, getAdapterPosition());
                 }
             });
+        }private void binds(final Proyecto proyecto, final OnItemClickListenerProyectos listener) {
+            // Procesamos los datos a renderizar
+            String nombre = proyecto.getNombreProyecto();
+            textViewName.setText(nombre);
+            Picasso.with(context).load(poster(nombre)).fit().into(imageViewPoster);
+
+            // Definimos que por cada elemento de nuestro recycler view, tenemos un click listener
+            // que se comporta de la siguiente manera...
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(proyecto, getAdapterPosition());
+                }
+            });
         }
     }
 
@@ -106,4 +141,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     public interface OnItemClickListener {
         void onItemClick(Habitacion habitacion, int position);
     }
+    public interface OnItemClickListenerProyectos {
+        void onItemClick(Proyecto Proyecto, int position);
+    }
+
 }

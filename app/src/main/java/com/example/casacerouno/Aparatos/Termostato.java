@@ -12,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.casacerouno.Enlace.conex.Conexion;
 import com.example.casacerouno.R;
 
+import static com.example.casacerouno.Activities.loginActivity.conexion;
+
 public class Termostato extends AppCompatActivity {
 
     private static int temperatura;
-    public static Conexion conexion;
 
     public static int getTemperatura() {
         Log.i("getTEMPERATURA -->", String.valueOf(temperatura));

@@ -22,7 +22,7 @@ import com.example.casacerouno.R;
 
 import java.util.List;
 
-import static com.example.casacerouno.Activities.MainActivity.conexion;
+import static com.example.casacerouno.Activities.loginActivity.conexion;
 
 public class ActivityDispositivos extends AppCompatActivity {
 

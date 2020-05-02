@@ -1,5 +1,7 @@
 package com.example.casacerouno.APIServices;
 
+import android.telephony.TelephonyManager;
+
 import com.example.casacerouno.Modelos.Casa;
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +13,7 @@ public class API {
 
     public static final String BASE_URL = "http://www.cerouno.com.ar/";
     private static Retrofit retrofit = null;
-    public static final String APIKEY = "7890";
+    public static String APIKEY = "0000000";
 
     public static Retrofit getApi() {
         if (retrofit == null) {
@@ -27,4 +29,8 @@ public class API {
         }
         return retrofit;
     }
+    public static void setApiKey(String keyApi){
+        APIKEY=keyApi;
+    }
+
 }

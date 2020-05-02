@@ -28,13 +28,14 @@ public class Conexion {
     // accion
     // valor
     private int status;
-    private String user, has ;
+    private int LocalRemoto;
+    private String user, has ,NombreProyecto ;
     private onPostExecute FuncionAEjecutar;
     private boolean bol_user =false,bol_has=false;
     private MyAsyncTask _MAsync;
     private Context Contexto;
     private WifiManager wifi;
-
+    private static String TAG = "CONEXION SEND -------";
 
     /*objeto especial para procesar respuestas */
     //private resultado rts;
@@ -78,7 +79,8 @@ public class Conexion {
 
     //envia la peticion al remoto
     private Conexion sendExterno(String dev, String acc, String val, onPostExecute EjecutarDespues) {
-            this._MAsync = new MyAsyncTask("cerouno.com.ar/app.php?g=" ,"80", this);
+            this._MAsync = new MyAsyncTask("cerouno.com.ar/app.php?g="
+                    ,"80", this);
             this._MAsync.setUsrhas(this.has);
 
             _MAsync
@@ -86,52 +88,59 @@ public class Conexion {
                     .setAcc(acc)
                     .setVal(val)
                     .execute();
-            Log.i("SEND-EXTERNO-->", dev+"-"+acc+"-"+val);
+            Log.i(TAG, dev+"-"+acc+"-"+val);
             FuncionAEjecutar = EjecutarDespues;
         return this;
     }
 
     public Conexion send(String dev, String acc, String val, final onPostExecute EjecutarDespues) {
         // alg oooo par hacer.
-        if (_MAsync == null) {
-            // primera vez obteniendo informacion de contexto
+        if (LocalRemoto == 1 ) {
+            // es local ejecutar de forma local.
+            if (_MAsync == null) {
+                // primera vez obteniendo informacion de contexto
 
-            if (host==null || host=="" ) {
-                msg.echo("buscar raspberry....");
-                final String d =dev;
-                final String a =acc;
-                final String v =val;
+                if (host == null || host == "") {
+                    msg.echo("buscar raspberry....");
+                    final String d = dev;
+                    final String a = acc;
+                    final String v = val;
 
-                ScanRaspberry("4net-core"
-                        , port
-                        , "_domotica._tcp",EjecutarDespues, new onScanError() {
-                            @Override
-                            public void ejecutarFalla(String txt){
-                                // sin encontrar la raspberry....
-                                sendExterno(d,a,v,EjecutarDespues);
-                            }
-                });
-            }else {
-                // no se ejecuta si no tengo el host
-                this._MAsync = new MyAsyncTask(host, port, this);
-                this._MAsync.setUsrhas(this.has);
+                    ScanRaspberry("4net-core"
+                            , Integer.getInteger(port)
+                            , "_domotica._tcp", EjecutarDespues, new onScanError() {
+                                @Override
+                                public void ejecutarFalla(String txt) {
+                                    // sin encontrar la raspberry....
+                                    sendExterno(d, a, v, EjecutarDespues);
+                                }
+                            });
+                } else {
+                    // no se ejecuta si no tengo el host
+                    this._MAsync = new MyAsyncTask(host, port, this);
+                    this._MAsync.setUsrhas(this.has);
 
-                _MAsync
-                        .setDev(dev)
-                        .setAcc(acc)
-                        .setVal(val)
-                        .execute();
+                    _MAsync
+                            .setDev(dev)
+                            .setAcc(acc)
+                            .setVal(val)
+                            .execute();
 
-                FuncionAEjecutar = EjecutarDespues;
-            }
-        }/*else{
+                    FuncionAEjecutar = EjecutarDespues;
+                }
+            }/*else{
                     Toast.makeText(Contexto
                             , "Hay una tecla funcionando aún."
                             , Toast.LENGTH_LONG).show();
         } */
-        // _MAsync.execute();// */
-        Log.i("CONEXION SEND -------", dev+" --- "+acc+" --- "+val);
-        return this;
+            // _MAsync.execute();// */
+            Log.i(TAG, dev + " --- " + acc + " --- " + val);
+            return this;
+        }else{
+            // es ejecucion remota. no hacer nada.
+            Log.i(TAG,"no se ejecuta el send d:"+dev + " a:" + acc + " v:" + val);
+            return this;
+        }
     }
 
 
@@ -169,27 +178,21 @@ public class Conexion {
         status=0;
         if ( ( bol_user && bol_has ) && ( getWIFIStatus() == 1 ) ){
             status=1;
-            /*
-            if (_MAsync == null) {
-                // primera vez obteniendo informacion de contexto
-                ScanRaspberry("4net-core", "8181","_domotica._tcp");
-                this._MAsync = new MyAsyncTask(host, port, this);
-                this._MAsync.setUsrhas(this.has);
-            }
-
-            _MAsync.setDev("GP0")
-                    .setAcc("R")
-                    .setVal("0")
-                    .execute();
-
-            FuncionAEjecutar=EjecutarDespues;
-            */
             send("GP0","R","0",EjecutarDespues);
 
         }
         return status;
     }
+    public String getNombreProyecto(){
+        return NombreProyecto;
+    }
+    public int getLocalRemoto() {
+        return LocalRemoto;
+    }
 
+    public void setLocalRemoto(int localRemoto) {
+        LocalRemoto = localRemoto;
+    }
 
     private boolean validarLogin(String rtUsr){
         return user == rtUsr;
@@ -267,16 +270,6 @@ public class Conexion {
     }
 
 
-
-
-
-
-    /*
-     *
-     * clase asincronica de comunicacion de datos.
-     *
-     * */
-
     /**
      * codificacion de servicios
      */
@@ -315,7 +308,7 @@ public class Conexion {
                     msg.echo("enviado.");
                     clientSocket.send(sendPacket);
 
-
+                    Buf="                                             ".getBytes();
                     DatagramPacket peticion = new DatagramPacket(Buf, Buf.length);
                     msg.echo("recepcion:");
                     clientSocket.receive(peticion);
@@ -323,6 +316,12 @@ public class Conexion {
 
                     msg.echo("autorizacion:" + txt);
                     setHash(txt.substring(0, 13));
+                    setNombreProyecto(
+                            txt
+                                    .substring(14,45)
+                                    .replaceAll("\\s+","")
+                    );
+
                     setHost(peticion.getAddress().getHostAddress());
 
                     msg.echo("host:" + peticion.getAddress().getHostAddress());
@@ -344,7 +343,7 @@ public class Conexion {
     /**
      * TODO: conexion automatica con la raspberry
      */
-    public void ScanRaspberry(String Nombre, String Puerto, String BusquedaBonjour, onPostExecute Ejecutor, onScanError Error) {
+    public void ScanRaspberry(String Nombre, Integer Puerto, String BusquedaBonjour, onPostExecute Ejecutor, onScanError Error) {
 
         // funcion de buqueda del equipo
         // "_domotica._tcp"
@@ -358,7 +357,8 @@ public class Conexion {
             sendBroadcast(
                     this.user
                     , this.has
-                    , 8182, Ejecutor
+                    , Puerto
+                    , Ejecutor
                     ,Error);//(int) Integer.getInteger(Puerto));
             ch = true;
             msg.echo("se ha enviado el broadcast");
@@ -373,28 +373,15 @@ public class Conexion {
 
     }
 
+    private void setNombreProyecto(String Nombre){
+        NombreProyecto=Nombre;
+    }
+
     public void setHost(String host) {
         // la clave deve coincidir con el has de usuario
         this.host = host;
         status = 2;
     }
-
-
-
-        /*
-
-        public void execute(String ... params){
-
-            this.onPostExecute(this.doInBackground(params));
-
-        }
-
-        // * */
-
-
-
-    // private class NetworkHelper {
-
 
     private int getWIFIStatus(){
         InetAddress ch = null;
