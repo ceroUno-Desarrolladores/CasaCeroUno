@@ -9,21 +9,35 @@ public class Proyecto {
     private String NombreProyecto ;
     @SerializedName("idProyecto")
     private String idProyecto ;
+    @SerializedName("tipo")
+    private String tipo;
     @SerializedName("NombreUsuario")
     private String NombreUsuario ;
     @SerializedName("idUsuario")
     private String idUsuario ;
 
+
     public Proyecto() {
     }
     public Proyecto(String NombreProyecto,
-                    String idProyecto, String NombreUsuario,
-                    String idUsuario) {
+                    String idProyecto,
+                    String tipo,
+                    String NombreUsuario,
+                    String idUsuario
+                    ) {
         this.idProyecto=idProyecto;
         this.NombreProyecto=NombreProyecto;
         this.NombreUsuario=NombreUsuario;
         this.idUsuario=idUsuario;
+        this.tipo = tipo;
+    }
 
+    public String getTipoProyecto() {
+        return tipo;
+    }
+
+    public void setTipoProyecto(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getNombreProyecto() {

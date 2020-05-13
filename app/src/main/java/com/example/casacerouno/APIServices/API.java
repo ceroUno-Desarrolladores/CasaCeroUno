@@ -13,7 +13,8 @@ public class API {
 
     public static final String BASE_URL = "http://www.cerouno.com.ar/";
     private static Retrofit retrofit = null;
-    public static String APIKEY = "0000000";
+
+    public static String APIKEY = "00000000";
 
     public static Retrofit getApi() {
         if (retrofit == null) {
@@ -31,6 +32,10 @@ public class API {
     }
     public static void setApiKey(String keyApi){
         APIKEY=keyApi;
+    }
+
+    public static String getAPIKEY(){
+        return APIKEY;
     }
 
 }

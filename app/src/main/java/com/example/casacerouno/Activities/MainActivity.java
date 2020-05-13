@@ -24,6 +24,7 @@ import com.example.casacerouno.Modelos.Casa;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.Modelos.Proyecto;
 import com.example.casacerouno.R;
+import com.example.casacerouno.Utils.Util;
 
 import java.util.List;
 import java.util.Timer;
@@ -43,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
     Casa casa;
     String casaVuelta;
     Comunicador comunicador = new Comunicador();
-
-
-    Timer timer = new Timer();
-
 
     private RecyclerView mRecyclerView;
     // Puede ser declarado como 'RecyclerView.Adapter' o como nuetra clase adaptador 'MyAdapter'
@@ -90,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_forget_logout:
                 removeSharedPreferences();
                 logOut();
+
+
+
                 return true;
 
             default:
@@ -97,11 +97,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void logOut() {
+
+        String email = Util.getUserEmailPreferences(preferences);
+        String password = Util.getUserPasswordPreferences(preferences);
+
+        //llamado para logueo en la casa
+        String dataLogin = comunicador.setDataLogin(API.getAPIKEY(), "salir", email, password);
+        String datalogin64 = comunicador.codificar64(dataLogin);
+
+        //llamado para logueo en la casa
+        Call<String> base64Call = manejador.casaBase64(datalogin64);
+        base64Call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                String respuesta = response.body();
+                String vuelta = comunicador.decodificar64(respuesta);
+                Toast.makeText(getApplicationContext(), vuelta, Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d("Fallo64->", t.getMessage());
+            }
+        });
 
         Intent intent = new Intent(this, loginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+
+
+
     }
 
     private void removeSharedPreferences() {
@@ -109,17 +137,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void seleccionarProyecto(){
+        Log.e("API KEY -->", API.getAPIKEY());
         /* funcion para listar y seleccionar los proyectos */
         Call<String> casa64 = manejador.casa64(
                 comunicador.codificar64(
-                        comunicador.setListaProyectos(API.APIKEY)));
+                        comunicador.setListaProyectos(API.getAPIKEY())));
 
         casa64.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 devolucion = comunicador.decodificar64(response.body());
                 ListarProyectos(devolucion);
-            }
+        }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
@@ -131,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
         Call<String> casa64 = manejador.casa64(
                 comunicador.codificar64(
-                        comunicador.setCasaInfo(API.APIKEY, "info", NroProyecto)));
+                        comunicador.setCasaInfo(API.getAPIKEY(), "info", NroProyecto)));
 
         casa64.enqueue(new Callback<String>() {
             @Override
@@ -218,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
         /* funcion para listar y seleccionar los proyectos */
         Call<String> casa64 = manejador.casa64(
                 comunicador.codificar64(
-                        comunicador.setListaProyectos(API.APIKEY)));
+                        comunicador.setListaProyectos(API.getAPIKEY())));
 
         casa64.enqueue(new Callback<String>() {
             @Override

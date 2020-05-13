@@ -12,4 +12,8 @@ public class Util {
         return preferences.getString("password", "");
     }
 
+    /*public static String getApiKeyPreferences(SharedPreferences preferences){
+        return preferences.getString("apiKey", "00000000");
+    }*/
+
 }

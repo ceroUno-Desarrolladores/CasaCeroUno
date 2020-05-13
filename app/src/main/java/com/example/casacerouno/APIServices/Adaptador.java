@@ -101,9 +101,10 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
             });
         }private void binds(final Proyecto proyecto, final OnItemClickListenerProyectos listener) {
             // Procesamos los datos a renderizar
-            String nombre = proyecto.getNombreProyecto();
-            textViewName.setText(nombre);
-            Picasso.with(context).load(poster(nombre)).fit().into(imageViewPoster);
+            String tipoProyecto = proyecto.getTipoProyecto();
+            String nombreProyecto = proyecto.getNombreProyecto();
+            textViewName.setText(nombreProyecto);
+            Picasso.with(context).load(poster(tipoProyecto)).fit().into(imageViewPoster);
 
             // Definimos que por cada elemento de nuestro recycler view, tenemos un click listener
             // que se comporta de la siguiente manera...
@@ -116,8 +117,12 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
         }
     }
 
+
+
     private int poster(String nombreHabitacion) {
         switch (nombreHabitacion) {
+            case "entrada":
+                return R.drawable.entrada;
             case "living":
                 return R.drawable.living;
             case "comedor":
@@ -130,10 +135,19 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
                 return R.drawable.patio;
             case "bano":
                 return R.drawable.bano;
-            case "entrada":
-                return R.drawable.entrada;
+            case "garage":
+                return R.drawable.garage;
+            case "casa":
+                return R.drawable.casa;
+            case "oficina":
+                return R.drawable.oficina;
+            case "local":
+                return R.drawable.local;
+            case "piscina":
+                return R.drawable.piscina;
             default:
                 return R.drawable.sin_icono;
+
         }
     }
 

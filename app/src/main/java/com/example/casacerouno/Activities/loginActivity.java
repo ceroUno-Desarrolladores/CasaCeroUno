@@ -50,18 +50,21 @@ public class loginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // numero unico de apikey.
         API.setApiKey(obtenerIMEI());
         autologin();
     }
 
     private void autologin(){
         preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+
+
         String email = Util.getUserEmailPreferences(preferences);
         String password = Util.getUserPasswordPreferences(preferences);
 
+
+
         //llamado para logueo en la casa
-        String dataLogin = comunicador.setDataLogin(API.APIKEY, "login", email, password);
+        String dataLogin = comunicador.setDataLogin(API.getAPIKEY(), "login", email, password);
         String datalogin64 = comunicador.codificar64(dataLogin);
 
         //llamado para logueo en la casa
@@ -71,12 +74,14 @@ public class loginActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 String respuesta = response.body();
                 vuelta = comunicador.decodificar64(respuesta);
-                if (vuelta.equals("es valido")) {
-                    // usuario validado pasar a la siguiente pantalla.
-                    verificarLocal();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                if (vuelta.equals("no es valido")) {
+                    //Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                    Log.e("NO LOGEADO -->", vuelta);
                     login();
+                } else {
+                    // usuario validado pasar a la siguiente pantalla.
+                    Log.e("LOGEADO DE UNA -->", vuelta);
+                    verificarLocal();
                 }
             }
 
@@ -89,11 +94,8 @@ public class loginActivity extends AppCompatActivity {
     }
     private void login(){
         setContentView(R.layout.activity_login);
-
         bindUI();
         preferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
-        setCredentialsIfExist();
-
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -113,12 +115,14 @@ public class loginActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         String respuesta = response.body();
                         vuelta = comunicador.decodificar64(respuesta);
-                        if (vuelta.equals("es valido")) {
+                        if (vuelta.equals("no es valido")) {
+                            Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+                        } else
                             // usuario validado pasar a la siguiente pantalla.
+                            Log.e("AHORA SI LOGEADO -->", vuelta);
                             saveOnSharedPreferences(email, password);
                             verificarLocal();
-                        } else
-                            Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrecta", Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
@@ -201,7 +205,7 @@ public class loginActivity extends AppCompatActivity {
         // verificar si existe una raspberry localmente..
         if (conexion == null) {
             conexion = new Conexion(this);
-            conexion.setUser(obtenerIMEI());
+            conexion.setUser(API.getAPIKEY());
             conexion.ScanRaspberry("4net-core"
                     , 8182
                     , "_domotica._tcp"
