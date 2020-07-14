@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("proyecto", proyecto.getIdProyecto());
                 startActivity(intent);
             }
+
         }
         ,false);
         // Enlazamos el layout manager y adaptor directamente al recycler view

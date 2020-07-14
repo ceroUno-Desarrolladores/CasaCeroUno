@@ -78,6 +78,7 @@ public class ActivityDispositivos extends AppCompatActivity {
         textView.setText(habitacion.getNombre());
     }
 
+
     private void cambioPantalla(Dispositivos dispositivo){
         String tipo = dispositivo.getTipo();
         switch (tipo){

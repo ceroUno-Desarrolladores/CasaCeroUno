@@ -70,6 +70,7 @@ public class AdaptadorDispositivos  extends RecyclerView.Adapter<AdaptadorDispos
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(dispositivo, getAdapterPosition());
+
                 }
             });
         }

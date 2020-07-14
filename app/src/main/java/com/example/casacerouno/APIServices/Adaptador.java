@@ -1,6 +1,7 @@
 package com.example.casacerouno.APIServices;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.casacerouno.Modelos.Habitacion;
 import com.example.casacerouno.Modelos.Proyecto;
 import com.example.casacerouno.R;
+import com.example.casacerouno.Utils.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     private int layout;
     private OnItemClickListener itemClickListener;
     private OnItemClickListenerProyectos itemClickListenerPr;
+    private OnLongItemClickListenerProyectos longItemClickListenerProyectos;
+    private SharedPreferences preferences;
 
     private Context context;
 
@@ -115,6 +119,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
                 }
             });
         }
+
     }
 
 
@@ -157,6 +162,9 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     }
     public interface OnItemClickListenerProyectos {
         void onItemClick(Proyecto Proyecto, int position);
+    }
+    public interface OnLongItemClickListenerProyectos{
+        void onLongItemClickListenerProyectos(Proyecto proyecto, String nombreProyecto);
     }
 
 }
